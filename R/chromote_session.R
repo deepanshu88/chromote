@@ -36,8 +36,7 @@ ChromoteSession <- R6Class(
       width = 992,
       height = 744,
       targetId = NULL,
-      wait_ = TRUE,
-      auto_events = NULL
+      wait_ = TRUE
     ) {
       self$parent <- parent
 
@@ -72,7 +71,6 @@ ChromoteSession <- R6Class(
       # Graft the entries from self$protocol onto self
       list2env(self$protocol, self)
 
-      private$auto_events <- auto_events
       private$event_manager <- EventManager$new(self)
       private$is_active_ <- TRUE
 
@@ -171,11 +169,7 @@ ChromoteSession <- R6Class(
     },
 
     get_auto_events = function() {
-      if (!is.null(private$auto_events)) {
-        private$auto_events
-      } else {
         self$parent$get_auto_events()
-      }
     },
 
     debug_log = function(...) {
@@ -199,7 +193,6 @@ ChromoteSession <- R6Class(
     is_active_ = NULL,
     event_manager = NULL,
     pixel_ratio = NULL,
-    auto_events = NULL,
     init_promise_ = NULL,
 
     register_event_listener = function(event, callback = NULL, timeout = NULL) {
